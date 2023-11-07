@@ -1,4 +1,12 @@
-<p>ID:</p><input [(ngModel)]="id" />
-<p>Nom du produit:</p><input [(ngModel)]="nom" />
-<p>Prix:</p><input [(ngModel)]="prix" />
-<p>Catégorie:</p><input [(ngModel)]="categorie" />
+<form [formGroup]="formRecherche" (ngSubmit)="submit()">
+    <p>ID:</p>
+    <input formControlName="id" />
+    <p>Nom du produit:</p>
+    <input formControlName="nom" />
+    <p>Prix:</p>
+    <input formControlName="prix" />
+    <p>Catégorie:</p>
+    <input formControlName="categorie" />
+    <button type="submit">Rechercher</button>
+  </form>
+  
