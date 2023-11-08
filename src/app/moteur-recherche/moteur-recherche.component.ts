@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { ProduitService } from '../produit.service';
 
 @Component({
   selector: 'app-moteur-recherche',
@@ -10,7 +11,7 @@ export class MoteurRechercheComponent {
 
   formRecherche: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private produitService: ProduitService) {
     this.formRecherche = this.formBuilder.group({
       id: [''],
       nom: [''],
@@ -18,7 +19,9 @@ export class MoteurRechercheComponent {
       categorie: ['']
     });
   }
-  submit(){
+
+  submit() {
     console.log(this.formRecherche.value);
+    this.produitService.searchProduits(this.formRecherche.value);
   }
 }
