@@ -11,8 +11,22 @@ export class ProduitService {
 
   constructor(private http: HttpClient) {}
 
-  getProduits(): Observable<Produit[]> {
-    return this.http.get<Produit[]>(this.produitUrl);
+  getProduits(criteria: any): Observable<Produit[]> {
+    return this.http.get<Produit[]>(this.produitUrl).pipe(
+      map((data: Produit[]) => {
+        return data.filter(produit => {
+          if (
+            (criteria.id === '' || (criteria.id !== '' && !isNaN(criteria.id) && produit.id === +criteria.id)) &&
+            (criteria.nom === '' || (criteria.nom !== '' && produit.nom.includes(criteria.nom))) &&
+            (criteria.prix === '' || (criteria.prix !== '' && !isNaN(criteria.prix) && produit.prix === +criteria.prix)) &&
+            (criteria.categorie === '' || (criteria.categorie !== '' && produit.categorie === criteria.categorie))
+          ) {
+            return true;
+          }
+          return false;
+        });
+      })
+    );
   }
 
   searchProduits(criteria: any): void {
@@ -87,4 +101,5 @@ export class ProduitService {
     console.log('Produits filtrés :', produitsFiltres);
 
   }
+
 }
